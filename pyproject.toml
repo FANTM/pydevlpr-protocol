@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "pydevlpr-protocol"
+version = "0.1.1"
+description = "The protocol used by the DELVPR Daemon to transfer data"
+readme = "README.md"
+authors = ["Ezra Boley <hello@getfantm.com>", "Finn Kuusisto <hello@getfantm.com>"]
+license = "MIT"
+documentation = "https://docs.getfantm.com"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+mypy = "^0.910"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
