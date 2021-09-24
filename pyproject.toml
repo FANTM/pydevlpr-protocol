@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydevlpr-protocol"
-version = "0.1.1"
+version = "0.1.2"
 description = "The protocol used by the DELVPR Daemon to transfer data"
 readme = "README.md"
 authors = ["Ezra Boley <hello@getfantm.com>", "Finn Kuusisto <hello@getfantm.com>"]

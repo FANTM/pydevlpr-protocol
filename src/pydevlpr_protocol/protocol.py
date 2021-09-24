@@ -1,6 +1,6 @@
 import logging
 import struct
-from typing import Union, Tuple
+from typing import Union, Tuple, List
 from asyncio.streams import StreamReader, StreamWriter
 
 
@@ -13,16 +13,26 @@ class DaemonSocket:
         self.remote_address = writer.get_extra_info('peername')  # FIXME Not clear what all the type options are here
 
     def get_remote_address(self):
+        """Gests the address of socket, this includes IP and port along with protocol dependent info.
+        
+        Find a list of return values here: """
+
         return self.remote_address
 
     def closed(self) -> bool:
+        """Checks if socket is closed."""
+
         return self.writer.is_closing()
 
     async def close(self) -> None:
+        """Blocking socket close."""
+
         self.writer.close()
         await self.writer.wait_closed()
 
     async def send(self, msg: str) -> None:
+        """Sends a message on the socket, assumes no '\\n' character included."""
+
         # make sure we're not closed before trying to write
         if self.closed():
             return
@@ -31,6 +41,8 @@ class DaemonSocket:
         await self.writer.drain()
 
     async def recv(self) -> str:
+        """Blocking read of data stream from socket until a '\\n' is observed."""
+
         # make sure we're not closed before trying to read
         if self.closed():
             return ''
@@ -53,7 +65,9 @@ class PacketType:
     UNSUBSCRIBE = "u"
 
     @staticmethod
-    def topics():
+    def topics() -> List[str]:
+        """Returns a list of all possible packet types."""
+
         return [val for attr, val in vars(PacketType).items() if not callable(getattr(PacketType, attr)) and not attr.startswith("__")]
 
 class DataTopic:
@@ -71,7 +85,9 @@ class DataTopic:
     NOTCH_50_TOPIC = "50"
 
     @staticmethod
-    def topics():
+    def topics() -> List[str]:
+        """Returns a list of all possible data topics."""
+
         return [val for attr, val in vars(DataTopic).items() if not callable(getattr(DataTopic, attr)) and not attr.startswith("__")]
 
 
